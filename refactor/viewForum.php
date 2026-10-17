@@ -14,13 +14,16 @@ global $result;
 
 <body>
   <main>
-
     <?php
     $id = $_GET['id'];
     echo "<a href='newTopic.php?id={$id}'>New topic</a><br>";
     if (mysqli_num_rows($result) != 0) {
       while ($row = $result->fetch_assoc()) {
-        echo $row['name'];
+        echo "<a href='viewTopic.php?id={$row['id']}'>
+      <article>
+      {$row['name']}
+      </article>
+      </a>";
       }
     } else {
       echo "No topics yet.";

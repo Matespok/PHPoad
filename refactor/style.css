@@ -44,3 +44,9 @@ form {
   width: 250px;
   margin: auto;
 }
+.responseAreaHidden {
+  display: none;
+}
+.responseAreaVisible {
+  display: block;
+}
