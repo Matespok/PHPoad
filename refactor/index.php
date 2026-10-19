@@ -3,6 +3,11 @@ session_start();
 include 'indexdata.php';
 global $resultCategory;
 global $resultForum;
+global $isAdmin;
+$isAdmin = false;
+    if($_SESSION['role'] == 'A'){
+    $isAdmin = true;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,21 +25,31 @@ global $resultForum;
     echo "<a href='logout.php'>logout</a>";
   } else {
     echo "you're not logged in. <a href='login.php'>login</a>";
+    
+    
   } ?>
 
 
   <h1>PHPoad - the PHP toad; but better and hand-written</h1>
   <main>
-
-    <a href="/refactor/newCategory.php">+<br /></a>
+      <?php 
+        if($isAdmin == true){
+        echo "<a href='newCategory.php'>make a new category +<br></a>";
+      }
+      ?>
 
     <?php
     if ($resultCategory->num_rows > 0) {
       while ($rowCategory = $resultCategory->fetch_assoc()) {
         echo "
               <section>
-                <h2>{$rowCategory["name"]}<a href='deletecategory.php?id={$rowCategory["id"]}'> - </a></h2>
-                <a href='newForum.php?category_id={$rowCategory["id"]}'>+</a>";
+      ";
+      if($isAdmin == true){
+       echo " <h2>{$rowCategory["name"]}<a href='deletecategory.php?id={$rowCategory["id"]}'> delete this category - </a></h2>
+                <a href='newForum.php?category_id={$rowCategory["id"]}'>+</a>";  
+      }else{
+        echo "<h2>{$rowCategory["name"]}</h2>";
+      }
         if ($resultForum->num_rows > 0) {
           $resultForum->data_seek(0);
           while ($rowForum = $resultForum->fetch_assoc()) {
