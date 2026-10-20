@@ -34,7 +34,7 @@ global $result;
             ";
       }
       else {
-      echo "<p>To make a post, you must <a href='login.php'>login</a></p>";
+      echo "<p>To make a post or respond, you must <a href='login.php'>login</a></p>";
       }
       ?>
       <?php
@@ -43,16 +43,21 @@ global $result;
       $i++;
       echo "
       <article>
-       <p>{$row['username']}</p>
-      <p>{$row['text']}</p>
-      <button type='button' class='response-btn' onclick='toggleVisibility({$i})'>Respond</button>
-      <div class='Hidden' id='Area-{$i}'>
-        <label for='response-{$i}'>your response: </label>
-        <br>
-        <textarea rows='3' cols='50' name='response' id='response-{$i}'></textarea>
-        <br>
-        <input type='submit'>
-      </div>
+        <p>{$row['username']}</p>
+        <p>{$row['text']}</p>
+        ";
+      if(isset($_SESSION['user_id'])){
+      echo "<button type='button' class='response-btn' onclick='toggleVisibility({$row['post_id']})'>Respond</button>
+          <div class='Hidden' id='Area-{$row['post_id']}'>
+            <form method='post' action='newResponse.php?respond-to={$row['post_id']}&topic_id={$_GET['id']}'>
+              <label for='response'>your response: </label>
+              <br>
+              <textarea rows='3' cols='50' name='response' id='response'></textarea>
+              <br>
+              <input type='submit'>
+            </form>";
+      }
+      echo"    </div>
       </article>
       ";
     }
