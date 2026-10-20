@@ -43,7 +43,7 @@ global $result;
         
         // Response preview handling using data attributes
         if(isset($row['replied_to'])){
-          echo "<p>{$row['username']} replied to: </p>
+          echo "<p>replying to: </p>
                 <article>
                   <div class='respondedToPost' data-reply-to='{$row['replied_to']}' id='postPreview-{$row['post_id']}'></div>
                 </article>";

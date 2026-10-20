@@ -13,13 +13,12 @@ if ($conn->connect_error) {
 echo "Successfully connected<br>";
 
 $sqltext = "
-CREATE DATABASE IF NOT EXISTS mysqlPHPtoad;
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(45) NOT NULL,
     role CHAR(1) NOT NULL DEFAULT 'U',
-    created_at DATETIME NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     about_me VARCHAR(255) NULL,
     password VARCHAR(256) NOT NULL,
     UNIQUE KEY name_UNIQUE (name)
@@ -38,8 +37,8 @@ CREATE TABLE IF NOT EXISTS forums (
     CONSTRAINT fk_category 
         FOREIGN KEY (category_id) 
         REFERENCES forum_categories (id) 
-        ON DELETE NO ACTION 
-        ON UPDATE NO ACTION
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS topics (
@@ -50,13 +49,13 @@ CREATE TABLE IF NOT EXISTS topics (
     CONSTRAINT fk_topic_user 
         FOREIGN KEY (user_id) 
         REFERENCES users (id) 
-        ON DELETE NO ACTION 
-        ON UPDATE NO ACTION,
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE,
     CONSTRAINT fk_topic_forum 
         FOREIGN KEY (forum_id) 
         REFERENCES forums (id) 
-        ON DELETE NO ACTION 
-        ON UPDATE NO ACTION
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS posts (
@@ -68,15 +67,14 @@ CREATE TABLE IF NOT EXISTS posts (
     CONSTRAINT fk_post_user 
         FOREIGN KEY (user_id) 
         REFERENCES users (id) 
-        ON DELETE NO ACTION 
-        ON UPDATE NO ACTION,
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE,
     CONSTRAINT fk_post_topic 
         FOREIGN KEY (topic_id) 
         REFERENCES topics (id) 
-        ON DELETE NO ACTION 
-        ON UPDATE NO ACTION
-) ENGINE = InnoDB;
-"; ?>
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
+) ENGINE = InnoDB;"; ?>
 <a href="index.php">Homepage</a>
 <?php
 if ($conn->multi_query($sqltext)) {

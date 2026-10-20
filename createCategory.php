@@ -1,4 +1,8 @@
 <?php
+session_start();
+if($_SESSION['role'] != 'A'){
+  die("You're not authorized to do this.");
+}
 
 $servername = '127.0.0.1';
 $username = 'username';
@@ -11,20 +15,20 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-if (!isset($_POST['name']) || trim($_POST['name']) === '') {
+if (!isset($_POST['categoryName']) || trim($_POST['categoryName']) === '') {
   die("The name was not given.");
 }
-$category_id = $_GET['category_id'];
-$name = trim($_POST['name']);
-$sqltext = "INSERT INTO forums (name, description, category_id) VALUES (?,?,?)";
-$description = trim($_POST['description']);
+
+$name = trim($_POST['categoryName']);
+$sqltext = "INSERT INTO forum_categories (name) VALUES (?)";
+
 if ($stmt = $conn->prepare($sqltext)) {
-  $stmt->bind_param('ssi', $name, $description, $category_id);
+  $stmt->bind_param('s', $name);
 
   if ($stmt->execute()) {
-    echo "Forum: " . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . " was created successfully";
+    echo "Forum category: " . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . " was created successfully";
   } else {
-    echo "Error creating forum: " . $stmt->error;
+    echo "Error creating category: " . $stmt->error;
   }
 
   $stmt->close();
