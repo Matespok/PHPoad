@@ -1,6 +1,12 @@
 <?php
 session_start();
 $id = $_GET['id'];
+if(isset($_SESSION['user_id'])){
+
+}
+else{
+  die("YOU MUST <a href='login.php'>LOGIN</a>");
+}
 ?>
 <!doctype html>
 <html lang="en">

@@ -19,12 +19,14 @@ $forum_id = $_GET['id'];
 $name = trim($_POST['name']);
 $user_id = $_SESSION['user_id'];
 
-$sqltext = "INSERT INTO topics (name, user_id, forum_id) VALUES (?,?,?)";
+$sqltext = "INSERT INTO topics (name, user_id, forum_id) VALUES (?,?,?)"; 
 if ($stmt = $conn->prepare($sqltext)) {
   $stmt->bind_param('sii', $name, $user_id, $forum_id);
 
   if ($stmt->execute()) {
+    $new_id = $conn->insert_id;
     echo "topic: " . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . " was created successfully";
+    echo "<br><a href='viewTopic.php?id={$new_id}'>Go to created topic</a>";
   } else {
     echo "Error creating topic: " . $stmt->error;
   }
@@ -35,4 +37,3 @@ if ($stmt = $conn->prepare($sqltext)) {
 }
 
 $conn->close();
-echo "<br><a href='viewForum.php?id={$forum_id}'>Go back to forum</a>";

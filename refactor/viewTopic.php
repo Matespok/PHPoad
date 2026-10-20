@@ -22,7 +22,7 @@ global $result;
       <section>
   <button onclick='toggleVisibility(0)'>Make post</button>
       <div class='Hidden' id='Area-0'>
-        <form>
+        <form method='post' action='newPost.php?topic_id={$_GET['id']}'>
           <label for='content'>Content of your post</label>
           <br>
           <textarea rows='4' cols='60' id='content' name='content'></textarea>
