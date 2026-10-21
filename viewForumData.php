@@ -1,22 +1,12 @@
 <?php
 
-$servername = '127.0.0.1';
-$username = 'username';
-$password = 'UserPass';
-$dbname = 'mysqlPHPtoad';
+require_once __DIR__ . '/init.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$forum_id = $_GET['id'];
+$db = Database::getConnection();
+$stmt = $db->prepare("SELECT * FROM topics WHERE forum_id = :forum_id");
+$stmt->execute([
+    'forum_id' => $forum_id,
+]);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$sqltext = "SELECT * FROM topics WHERE forum_id=?";
-$forumid = $_GET['id'];
-if ($stmt = $conn->prepare($sqltext)) {
-    $stmt->bind_param('i', $forumid);
-    $stmt->execute();
-    $result = $stmt->get_result();
-}
-$stmt->close();
-$conn->close();
+$resultForum = $stmt->fetchAll();

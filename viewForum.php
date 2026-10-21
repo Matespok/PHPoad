@@ -1,6 +1,7 @@
 <?php
+require_once __DIR__ . '/init.php';
 include 'viewForumData.php';
-global $result;
+global $resultForum;
 ?>
 <!doctype html>
 <html lang="en">
@@ -15,16 +16,17 @@ global $result;
 <body>
   <main>
     <?php
-    $id = $_GET['id'];
-echo "<a href='newTopic.php?id={$id}'>New topic</a><br>";
-if (mysqli_num_rows($result) != 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "<a href='viewTopic.php?id={$row['id']}'>
-      <article>
-      {$row['name']}
-      </article>
+echo "<a href='newTopic.php?id={$_GET['id']}'>New topic</a><br>";
+if (count($resultForum) > 0) {
+    foreach ($resultForum as $forum) {
+        echo "
+      <a href='viewTopic.php?id={$forum['id']}'>
+        <article>
+          {$forum['name']}
+        </article>
       </a>";
     }
+
 } else {
     echo "No topics yet.";
 }

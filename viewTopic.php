@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/init.php';
 include 'viewTopicData.php';
 global $result;
 ?>
@@ -37,41 +37,41 @@ global $result;
 ?>
 
       <?php
-while ($row = $result->fetch_assoc()) {
-    echo "<article >";
+    foreach ($result as $post) {
+        echo "<article >";
 
-    // Response preview handling using data attributes
-    if (isset($row['replied_to'])) {
-        echo "<p>replying to: </p>
+        // Response preview handling using data attributes
+        if (isset($post['replied_to'])) {
+            echo "<p>replying to: </p>
                 <article>
-                  <div class='respondedToPost' data-reply-to='{$row['replied_to']}' id='postPreview-{$row['post_id']}'></div>
+                  <div class='respondedToPost' data-reply-to='{$post['replied_to']}' id='postPreview-{$post['post_id']}'></div>
                 </article>";
-    }
+        }
 
-    echo "
-      <div id='post-{$row['post_id']}'>
-        <p>{$row['username']}</p>
-        <p>{$row['text']}</p>
+        echo "
+      <div id='post-{$post['post_id']}'>
+        <p>{$post['username']}</p>
+        <p>{$post['text']}</p>
       </div>
        ";
 
-    if (isset($_SESSION['user_id'])) {
-        $safeTopicId = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');
-        echo "
-          <button type='button' class='response-btn' onclick='toggleVisibility({$row['post_id']})'>Respond</button>
-          <div class='Hidden' id='Area-{$row['post_id']}'>
-            <form method='post' action='newResponse.php?respond-to={$row['post_id']}&topic_id={$safeTopicId}'>
-              <label for='response-{$row['post_id']}'>your response: </label>
+        if (isset($_SESSION['user_id'])) {
+            $safeTopicId = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');
+            echo "
+          <button type='button' class='response-btn' onclick='toggleVisibility({$post['post_id']})'>Respond</button>
+          <div class='Hidden' id='Area-{$post['post_id']}'>
+            <form method='post' action='newResponse.php?respond-to={$post['post_id']}&topic_id={$safeTopicId}'>
+              <label for='response-{$post['post_id']}'>your response: </label>
               <br>
-              <textarea rows='3' cols='50' name='response' id='response-{$row['post_id']}'></textarea>
+              <textarea rows='3' cols='50' name='response' id='response-{$post['post_id']}'></textarea>
               <br>
               <input type='submit'>
             </form>
           </div>";
-    }
+        }
 
-    echo "</article>";
-}
+        echo "</article>";
+    }
 ?>
     </main>
 

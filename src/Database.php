@@ -6,10 +6,10 @@ class Database
 
     private function __construct() {}
 
-    private function getConnection(): PDO
+    public static function getConnection(): PDO
     {
         if (self::$instance === null) {
-            $config = require __DIR__ . '../config/database.php';
+            $config = require __DIR__ . '/../config/database.php';
 
             $dsn = "mysql:host={$config['host']};dbname={$config['dbname']};charset={$config['charset']}";
 

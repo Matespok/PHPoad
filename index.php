@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/init.php';
 include 'indexdata.php';
 global $resultCategory;
 global $resultForum;
@@ -24,7 +24,7 @@ if ($_SESSION['role'] == 'A') {
       echo "you're logged in!";
       echo "<a href='logout.php'>logout</a>";
   } else {
-      echo "you're not logged in. <a href='login.php'>login</a>";
+      echo "you're not logged in. <a href='loginQuery.php'>login</a>";
 
 
   } ?>
@@ -39,26 +39,25 @@ if ($_SESSION['role'] == 'A') {
 ?>
 
     <?php
-    if ($resultCategory->num_rows > 0) {
-        while ($rowCategory = $resultCategory->fetch_assoc()) {
+    if (count($resultCategory) > 0) {
+        foreach ($resultCategory as $category) {
             echo "
               <section>
       ";
             if ($isAdmin == true) {
-                echo " <h2>{$rowCategory["name"]}<a href='deleteCategory.php?id={$rowCategory["id"]}'>delete this category - </a></h2>
-                <a href='newForum.php?category_id={$rowCategory["id"]}'>+</a>";
+                echo " <h2>{$category["name"]}<a href='deleteCategoryQuery.php?id={$category["id"]}'>delete this category - </a></h2>
+                <a href='newForum.php?category_id={$category["id"]}'>+</a>";
             } else {
-                echo "<h2>{$rowCategory["name"]}</h2>";
+                echo "<h2>{$category["name"]}</h2>";
             }
-            if ($resultForum->num_rows > 0) {
-                $resultForum->data_seek(0);
-                while ($rowForum = $resultForum->fetch_assoc()) {
-                    if ($rowCategory["id"] == $rowForum["category_id"]) {
+            if (count($resultForum) > 0) {
+                foreach ($resultForum as $forum) {
+                    if ($category["id"] == $forum["category_id"]) {
                         echo "
-                  <a href='viewForum.php?id={$rowForum['id']}'>
+                  <a href='viewForum.php?id={$forum['id']}'>
                   <article>
-                    <h4>{$rowForum['name']}</h4>
-                    <p>{$rowForum["description"]}</p>
+                    <h4>{$forum['name']}</h4>
+                    <p>{$forum["description"]}</p>
                   </article>
                 </a>";
                     }

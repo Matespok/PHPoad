@@ -2,15 +2,18 @@
 
 class Env
 {
-    public static function fileExists(): void
+    public static function load(string $filePath): void
     {
-
-        $filePath = "../.env";
 
         if (!file_exists($filePath)) {
             throw new Exception(".env file does not exist in path :\"{$filePath}\"");
-        } else {
-            die("file doesn't exist");
+        }
+        $data = parse_ini_file($filePath, false, INI_SCANNER_RAW);
+        if ($data === false) {
+            throw new Exception("Failed processing .Env file" . $filePath);
+        }
+        foreach ($data as $key => $value) {
+            $_ENV[$key] = $value;
         }
     }
 

@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/init.php';
 if ($_SESSION['role'] != 'A') {
     die("You're not authorized to do this.");
 } ?>
