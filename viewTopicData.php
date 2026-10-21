@@ -1,23 +1,12 @@
 <?php
 
-$servername = '127.0.0.1';
-$username = 'username';
-$password = 'UserPass';
-$dbname = 'mysqlPHPtoad';
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-
-$sqltext = "SELECT posts.id AS post_id, posts.text, posts.replied_to, users.name AS username FROM posts INNER JOIN users ON posts.user_id=users.id WHERE topic_id = ?";
+require_once __DIR__ . '/init.php';
+$db = Database::getConnection();
+$stmt = $db->prepare("SELECT posts.id AS post_id, posts.text, posts.replied_to, users.name AS username 
+                    FROM posts 
+                    INNER JOIN users ON posts.user_id=users.id WHERE topic_id = :topic_id");
 $topic_id = $_GET['id'];
-if ($stmt = $conn->prepare($sqltext)) {
-  $stmt->bind_param('i', $topic_id);
-  $stmt->execute();
-  $result = $stmt->get_result();
-}
-
-$stmt->close();
-$conn->close();
+$stmt->execute([
+    'topic_id' => $topic_id,
+]);
+$result = $stmt->fetchAll();

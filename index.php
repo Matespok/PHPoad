@@ -1,13 +1,13 @@
 <?php
-session_start();
+require_once __DIR__ . '/init.php';
 include 'indexdata.php';
 global $resultCategory;
 global $resultForum;
 global $isAdmin;
 $isAdmin = false;
-    if($_SESSION['role'] == 'A'){
+if ($_SESSION['role'] == 'A') {
     $isAdmin = true;
-    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,51 +21,50 @@ $isAdmin = false;
 
 <body>
   <?php if (isset($_SESSION['user_id'])) {
-    echo "you're logged in!";
-    echo "<a href='logout.php'>logout</a>";
+      echo "you're logged in!";
+      echo "<a href='logout.php'>logout</a>";
   } else {
-    echo "you're not logged in. <a href='login.php'>login</a>";
-    
-    
+      echo "you're not logged in. <a href='loginQuery.php'>login</a>";
+
+
   } ?>
 
 
   <h1>PHPoad - the PHP toad; but better and hand-written</h1>
   <main>
-      <?php 
-        if($isAdmin == true){
-        echo "<a href='newCategory.php'>make a new category +<br></a>";
-      }
-      ?>
+      <?php
+        if ($isAdmin == true) {
+            echo "<a href='newCategory.php'>make a new category +<br></a>";
+        }
+?>
 
     <?php
-    if ($resultCategory->num_rows > 0) {
-      while ($rowCategory = $resultCategory->fetch_assoc()) {
-        echo "
+    if (count($resultCategory) > 0) {
+        foreach ($resultCategory as $category) {
+            echo "
               <section>
       ";
-      if($isAdmin == true){
-       echo " <h2>{$rowCategory["name"]}<a href='deleteCategory.php?id={$rowCategory["id"]}'>delete this category - </a></h2>
-                <a href='newForum.php?category_id={$rowCategory["id"]}'>+</a>";  
-      }else{
-        echo "<h2>{$rowCategory["name"]}</h2>";
-      }
-        if ($resultForum->num_rows > 0) {
-          $resultForum->data_seek(0);
-          while ($rowForum = $resultForum->fetch_assoc()) {
-            if ($rowCategory["id"] == $rowForum["category_id"]) {
-              echo "
-                  <a href='viewForum.php?id={$rowForum['id']}'>
+            if ($isAdmin == true) {
+                echo " <h2>{$category["name"]}<a href='deleteCategoryQuery.php?id={$category["id"]}'>delete this category - </a></h2>
+                <a href='newForum.php?category_id={$category["id"]}'>+</a>";
+            } else {
+                echo "<h2>{$category["name"]}</h2>";
+            }
+            if (count($resultForum) > 0) {
+                foreach ($resultForum as $forum) {
+                    if ($category["id"] == $forum["category_id"]) {
+                        echo "
+                  <a href='viewForum.php?id={$forum['id']}'>
                   <article>
-                    <h4>{$rowForum['name']}</h4>
-                    <p>{$rowForum["description"]}</p>
+                    <h4>{$forum['name']}</h4>
+                    <p>{$forum["description"]}</p>
                   </article>
                 </a>";
+                    }
+                }
             }
-          }
+            echo "</section>";
         }
-        echo "</section>";
-      }
     } ?>
   </main>
 

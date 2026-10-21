@@ -1,19 +1,3 @@
-<?php
-
-$servername = '127.0.0.1';
-$username = 'username';
-$password = 'UserPass';
-$dbname = 'mysqlPHPtoad';
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-echo "Successfully connected<br>";
-
-$sqltext = "
-
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(45) NOT NULL,
@@ -74,19 +58,4 @@ CREATE TABLE IF NOT EXISTS posts (
         REFERENCES topics (id) 
         ON DELETE CASCADE 
         ON UPDATE CASCADE
-) ENGINE = InnoDB;"; ?>
-<a href="index.php">Homepage</a>
-<?php
-if ($conn->multi_query($sqltext)) {
-    do {
-        if ($result = $conn->store_result()) {
-            $result->free();
-        }
-    } while ($conn->more_results() && $conn->next_result());
-    echo "Tables created successfully";
-} else {
-    echo "Error creating tables: " . $conn->error;
-}
-
-$conn->close();
-?>
+) ENGINE = InnoDB;

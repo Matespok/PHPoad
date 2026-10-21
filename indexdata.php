@@ -1,24 +1,10 @@
 <?php
-$servername = '127.0.0.1';
-$username = 'username';
-$password = 'UserPass';
-$dbname = 'mysqlPHPtoad';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+require_once __DIR__ . '/init.php';
 
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-?>
+$db = Database::getConnection();
+$stmt = $db->query("SELECT id, name FROM forum_categories");
+$resultCategory = $stmt->fetchAll();
 
-<?php
-$sqltextCategory = "select id, name from forum_categories";
-
-$resultCategory = $conn->query($sqltextCategory);
-
-$sqltextForum = "SELECT * FROM forums";
-$resultForum = $conn->query($sqltextForum);
-
-
-
-$conn->close();
+$stmt = $db->query("SELECT * FROM forums");
+$resultForum = $stmt->fetchAll();

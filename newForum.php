@@ -1,7 +1,7 @@
 <?php
-session_start();
+require_once __DIR__ . '/init.php';
 if ($_SESSION['role'] != 'A') {
-  die("You're not authorized to do this!");
+    die("You're not authorized to do this!");
 }
 ?>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ if ($_SESSION['role'] != 'A') {
 <body>
     <main>
 <h1>Create a new forum for category id: <?php echo $_GET['category_id']; ?>: </h1>
-    <form action="createForum.php?category_id=<?php echo $_GET['category_id']; ?>:" method="post">
+    <form action="createForum.php?category_id=<?php echo $_GET['category_id']; ?>" method="post">
         <label for="forumName">Forum name:</label>
         <br>
         <input type="text" name="forumName" id="forumName">

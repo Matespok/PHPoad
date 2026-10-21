@@ -1,13 +1,8 @@
 <?php
-session_start();
-$id = $_GET['id'];
-if(isset($_SESSION['user_id'])){
-
-}
-else{
-  die("YOU MUST <a href='login.php'>LOGIN</a>");
-}
-?>
+require_once __DIR__ . '/init.php';
+if (!isset($_SESSION['user_id'])) {
+    die("YOU MUST <a href='login.php'>LOGIN</a>");
+} ?>
 <!doctype html>
 <html lang="en">
 
@@ -20,7 +15,7 @@ else{
 
 <body>
   <main>
-    <form method="post" action="createTopic.php?id=<?php echo $id; ?>">
+    <form method="post" action="createTopic.php?id=<?php echo $_GET['id']; ?>">
       <label for="name">Topic name:</label>
       <input id="name" name="name" type="text">
       <br>
