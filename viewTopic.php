@@ -15,9 +15,9 @@ global $result;
 
 <body>
     <main>
-      <?php 
-      if(isset($_SESSION['user_id'])){
-      echo "
+      <?php
+      if (isset($_SESSION['user_id'])) {
+          echo "
       <section>
         <button onclick='toggleVisibility(0)'>Make post</button>
         <div class='Hidden' id='Area-0'>
@@ -31,34 +31,33 @@ global $result;
         </div>
       </section>
       ";
+      } else {
+          echo "<p>To make a post or respond, you must <a href='login.php'>login</a></p>";
       }
-      else {
-        echo "<p>To make a post or respond, you must <a href='login.php'>login</a></p>";
-      }
-      ?>
+?>
 
       <?php
-      while ($row = $result->fetch_assoc()) {
-        echo "<article >";
-        
-        // Response preview handling using data attributes
-        if(isset($row['replied_to'])){
-          echo "<p>replying to: </p>
+while ($row = $result->fetch_assoc()) {
+    echo "<article >";
+
+    // Response preview handling using data attributes
+    if (isset($row['replied_to'])) {
+        echo "<p>replying to: </p>
                 <article>
                   <div class='respondedToPost' data-reply-to='{$row['replied_to']}' id='postPreview-{$row['post_id']}'></div>
                 </article>";
-        }
+    }
 
-      echo "
+    echo "
       <div id='post-{$row['post_id']}'>
         <p>{$row['username']}</p>
         <p>{$row['text']}</p>
       </div>
        ";
 
-        if(isset($_SESSION['user_id'])){
-          $safeTopicId = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');
-          echo "
+    if (isset($_SESSION['user_id'])) {
+        $safeTopicId = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');
+        echo "
           <button type='button' class='response-btn' onclick='toggleVisibility({$row['post_id']})'>Respond</button>
           <div class='Hidden' id='Area-{$row['post_id']}'>
             <form method='post' action='newResponse.php?respond-to={$row['post_id']}&topic_id={$safeTopicId}'>
@@ -69,11 +68,11 @@ global $result;
               <input type='submit'>
             </form>
           </div>";
-        }
+    }
 
-        echo "</article>";
-      }
-      ?>
+    echo "</article>";
+}
+?>
     </main>
 
     <script>

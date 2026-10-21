@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['role'] != 'A') {
-  die("You're not authorized to do this!");
+    die("You're not authorized to do this!");
 }
 ?>
 <!DOCTYPE html>
