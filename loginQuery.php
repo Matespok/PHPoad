@@ -14,8 +14,8 @@ if (isset($_SESSION['user_id'])) {
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-  <main>
+  <body>
+<?php require_once 'nav.php'; ?>  <main>
     <form method="post" action="login.php">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username">

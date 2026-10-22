@@ -12,7 +12,8 @@ if ($_SESSION['role'] != 'A') {
     <title>PHPoad - New forum</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+    <body>
+<?php require_once 'nav.php'; ?> 
     <main>
 <h1>Create a new forum for category id: <?php echo $_GET['category_id']; ?>: </h1>
     <form action="createForum.php?category_id=<?php echo $_GET['category_id']; ?>" method="post">

@@ -16,7 +16,8 @@ if (isset($_SESSION['id'])) {
 </head>
 
 <body>
-<main>
+            <main>
+<?php require_once 'nav.php'; ?> 
       <form method="post" action="register.php">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username">

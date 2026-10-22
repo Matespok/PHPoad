@@ -11,7 +11,8 @@ if ($_SESSION['role'] != 'A') {
     <title>PHPoad new category</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+  <body>
+<?php require_once 'nav.php'; ?> 
   <main>
     <form method="post" action="createCategory.php">
         <label for="categoryName">Category name: </label>

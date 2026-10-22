@@ -14,14 +14,13 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-  <main>
+<?php require_once 'nav.php'; ?> 
     <form method="post" action="createTopic.php?id=<?php echo $_GET['id']; ?>">
       <label for="name">Topic name:</label>
       <input id="name" name="name" type="text">
       <br>
       <input type="submit">
     </form>
-  </main>
 </body>
 
 </html>
