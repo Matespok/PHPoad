@@ -30,14 +30,15 @@ Installation & Setup
 
 1. Clone the repository
 
-git clone https://github.com/your-username/phpoad.git
-cd phpoad
+`git clone https://github.com/your-username/phpoad.git
+cd phpoad`
 
 
 2. Configure Environment Variables
 
 Create a .env file in the project root:
 
+```
 # Application Settings
 APP_DEBUG=true                # Set to false in production
 
@@ -50,27 +51,27 @@ DB_CHARSET=utf8mb4           # Recommended default
 
 # Docker / Root Credentials
 ROOT_PASSWORD=rootpassword
-
+```
 
 3. Start the Database Container
 
 Spin up the database using Docker Compose:
 
-docker-compose up -d
+`docker-compose up -d`
 
 
 4. Launch the Local Web Server
 
 Run the built-in PHP development server on your preferred port (e.g., 8000):
 
-php -S localhost:8000
+`php -S localhost:8000`
 
 
 5. Open in Browser
 
 Navigate to:
 
-http://localhost:8000
+`http://localhost:8000`
 
 
 The forum is now running locally.
