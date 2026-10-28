@@ -1,20 +1,21 @@
-PHPoad (PHP Organizes All Discussions)
+# PHPoad (PHP Organizes All Discussions)
 
 A lightweight, work-in-progress web forum built in pure PHP with 100% human-crafted code.
+To try it out: http://matespok.xf.cz/ . Click on: 'Pokračovat na nezabezpečený web', right next to the green button.
 
-About The Project
+# About The Project
 
 PHPoad is a minimalist discussion forum engine currently in active development.
 
 Disclaimer: This project is currently in the MVP (Minimum Viable Product) stage. Known security practices, hardened input sanitization, and vulnerability patches are planned for upcoming milestones. Do not use this in a mission-critical production environment yet!
 
-Key Details
+# Key Details
 
 Architecture: Human-written procedural/OOP PHP.
 
 Development Status: Active WIP — active feature development is distributed across feature branches (git branch -a).
 
-Getting Started
+# Getting Started
 
 Follow these steps to get a local instance up and running.
 
