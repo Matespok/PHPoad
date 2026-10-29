@@ -9,4 +9,4 @@ $topic_id = $_GET['id'];
 $stmt->execute([
     'topic_id' => $topic_id,
 ]);
-$result = $stmt->fetchAll();
+$resultPosts = $stmt->fetchAll();

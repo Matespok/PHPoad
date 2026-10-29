@@ -19,55 +19,50 @@ if ($_SESSION['role'] == 'A') {
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-  <?php if (isset($_SESSION['user_id'])) {
-      echo "you're logged in!";
-      echo "<a href='logout.php'>logout</a>";
-  } else {
-      echo "you're not logged in. <a href='loginQuery.php'>login</a>";
-
-
-  } ?>
-
-
-  <h1>PHPoad - the PHP toad; but better and hand-written</h1>
-  <main>
+    <body>
+        <?php require_once 'nav.php';
+?> 
+        
+       <main>
       <?php
-        if ($isAdmin == true) {
-            echo "<a href='newCategory.php'>make a new category +<br></a>";
-        }
+      if ($isAdmin == true) {
+          echo "<a href='newCategory.php' class='btn'>make a new category +<br></a>";
+      }
 ?>
 
-    <?php
+  <?php
     if (count($resultCategory) > 0) {
         foreach ($resultCategory as $category) {
             echo "
-              <section>
       ";
             if ($isAdmin == true) {
-                echo " <h2>{$category["name"]}<a href='deleteCategoryQuery.php?id={$category["id"]}'>delete this category - </a></h2>
-                <a href='newForum.php?category_id={$category["id"]}'>+</a>";
+                echo "
+            <div class='category-title'>{$category["name"]} 
+        <span><a href='newForum.php?category_id={$category["id"]}'>+ Make a new forum inside this category</a> | <a href='deleteCategoryQuery.php?id={$category["id"]}'> - delete this category </a></span>
+
+            </div>";
             } else {
-                echo "<h2>{$category["name"]}</h2>";
+                echo "<div class='category-title'>{$category["name"]}</div>";
             }
             if (count($resultForum) > 0) {
                 foreach ($resultForum as $forum) {
                     if ($category["id"] == $forum["category_id"]) {
                         echo "
-                  <a href='viewForum.php?id={$forum['id']}'>
-                  <article>
-                    <h4>{$forum['name']}</h4>
-                    <p>{$forum["description"]}</p>
-                  </article>
-                </a>";
+            
+            <a href='viewForum.php?id={$forum['id']}&category_name={$category['name']}'>
+            <div class='forum'>
+            <h4>{$forum['name']}
+            <br>
+                    <span>{$forum["description"]}</span>
+                </div>
+            </a>";
                     }
                 }
             }
-            echo "</section>";
+            echo "";
         }
     } ?>
-  </main>
-
+</main>
 </body>
 
 </html>
