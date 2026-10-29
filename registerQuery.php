@@ -16,20 +16,20 @@ if (isset($_SESSION['id'])) {
 </head>
 
 <body>
-            <main>
+
 <?php require_once 'nav.php'; ?> 
       <form method="post" action="register.php">
       <label for="username">Username:</label>
-      <input type="text" id="username" name="username">
+      <input type="text" id="username" name="username" required>
       <br>
       <label for="password">Password:</label>
-      <input type="password" id="password" name="password">
+      <input type="password" id="password" name="password" required>
       <br>
       <label for="about-me">About you (not mandatory):</label>
       <textarea name="about-me" id="about-me" rows="4" cols="30"></textarea>
       <input type="submit" value="Register">
-    </form>
-</main>
+            </form>
+            <span>PLS fill all fields out before registering...</span>
 </body>
 
 </html>
